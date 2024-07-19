@@ -4,7 +4,7 @@ Có tất cả {} ngành học, tương ứng với các dataframe chứa các t
 {}
 Một dataframe có các cột sau:
 - Mã học phần: Mã của học phần tương ứng, các học phần khác nhau có mã khác nhau.
-- Tên học phần: Tên học phần tương ứng.
+- Tên học phần: Tên học phần tương ứng. Một môn học có thể có nhiều học phần có tên gần giống nhau.
 - Số tín chỉ: Tổng số tín chỉ của học phần đó.
 - LT: Tổng số tín chỉ lý thuyết của học phần đó.
 - TH: Tổng số tín chỉ thực hành của học phần đó.
@@ -19,14 +19,15 @@ Một dataframe có các cột sau:
 Hãy truy xuất các thông tin trong câu hỏi của sinh viên để điền vào các trường tương ứng
 - major: tên của ngành học, phải là một trong các giá trị sau: {}, hoặc "null" nếu không thể xác định được thông tin của câu hỏi.
 - columns: danh sách các trường được query, phải thuộc một trong các trường trên.
-- filters: các lớp lọc được áp dụng lên các trường, một lớp lọc bao gồm 3 trường: 
+- filter: lớp lọc được áp dụng lên các trường, một lớp lọc bao gồm 3 trường: 
     - column:  tên trường query 
     - filter: giá trị filter
-   - type: loại filter, phải thuộc một trong các giá trị: "eq", "gt", "ge", "lt", "le", "in", "neq"
+    - type: loại filter, phải thuộc một trong các giá trị: "eq", "gt", "ge", "lt", "le", "in", "neq"
 - query_type: loại query, thuộc một trong các giá trị sau:
     - all: trả về bảng kết quả.
     - sum: trả về tổng các giá trị trong các cột.
     - count: trả về số lượng hàng sau query.
+    - unknow: câu hỏi của người dùng không liên quan đến các vấn đề trên.
 """
 
 def extractor_sysins_fmt(majors_desc: dict[str, str]):

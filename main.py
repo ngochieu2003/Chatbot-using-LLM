@@ -1,35 +1,36 @@
-# from gemini_structured.llm.llm import gemini_init
-
 from dotenv import load_dotenv
 load_dotenv()
 
-import gemini_structured.data_engine.loader as loader
-import gemini_structured.llm.prompt as prompt
-
-majors_df = loader.load_multiple_csv(["khmt.csv"])
 #
-# print(list(dataframes.keys()))
-# print(dataframes["khmt"].head())
+# import gemini_structured.query.query_executor as qe
+#
+# prompt = "Danh sách những học phần Vật lý"
+# print(f"prompt: {prompt}")
+# print("===")
+# response = llm.llm_query_gen.generate_content(prompt)
+# query_json = response.text
+# print(query_json)
+# print("===")
+# result = qe.execute_json(query_json, majors_df)
+# print(result)
 
-majors_desc = {
-    "khmt": "Ngành Khoa học máy tính",
-}
+import os
+from fastapi import FastAPI
+from fastapi.responses import RedirectResponse
+from gemini_structured.api.chat import chat_router
+import uvicorn
 
-import gemini_structured.query.query_executor as qe
-import json
+app = FastAPI()
 
-cmd = {
-    "major": "khmt",
-    "columns": [
-        "Mã học phần"
-    ],
-    "filters": {
-        "column": "Số tín chỉ",
-        "filter": 2,
-        "type": "le"
-    },
-    "query_type": "sum"
-}
-s = json.dumps(cmd)
+app.include_router(chat_router, prefix='/api/chat')
 
-print(qe.execute_json(s, majors_df))
+@app.get("/")
+async def redirect_to_docs():
+    return RedirectResponse(url="/docs")
+
+if __name__ == "__main__":
+    app_host = os.getenv("APP_HOST", "0.0.0.0")
+    app_port = int(os.getenv("APP_PORT", "8000"))
+    reload = True 
+
+    uvicorn.run(app="main:app", host=app_host, port=app_port, reload=reload)
