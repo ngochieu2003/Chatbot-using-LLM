@@ -22,12 +22,11 @@ Hãy truy xuất các thông tin trong câu hỏi của sinh viên để điền
 - filters: các lớp lọc được áp dụng lên các trường, một lớp lọc bao gồm 3 trường: 
     - column:  tên trường query 
     - filter: giá trị filter
-   - type: loại filter, phải thuộc một trong các giá trị: "eq", "gt", "ge", "lt", "le", "in"
+   - type: loại filter, phải thuộc một trong các giá trị: "eq", "gt", "ge", "lt", "le", "in", "neq"
 - query_type: loại query, thuộc một trong các giá trị sau:
     - all: trả về bảng kết quả.
     - sum: trả về tổng các giá trị trong các cột.
     - count: trả về số lượng hàng sau query.
-    - average: trả về giá trị trung bình của các cột.
 """
 
 def extractor_sysins_fmt(majors_desc: dict[str, str]):
